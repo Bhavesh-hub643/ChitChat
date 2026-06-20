@@ -1,8 +1,7 @@
-import dotenv from "dotenv";
+import "./env.js";
 import connectDB from "./db/index.js";
 import { httpServer } from "./socket/socket.js";
 
-dotenv.config();
 
 connectDB()
   .then(() => {

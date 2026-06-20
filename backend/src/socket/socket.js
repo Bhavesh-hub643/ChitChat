@@ -6,7 +6,7 @@ export const httpServer = http.createServer(app);
 
 const io = new Server(httpServer, {
   cors: {
-    origin: process.env.CORS_ORIGIN,
+    origin: ["http://localhost:5173", process.env.CORS_ORIGIN],
     credentials: true,
   },
 });

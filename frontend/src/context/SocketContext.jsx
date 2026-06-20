@@ -30,8 +30,13 @@ export const SocketProvider = ({ children }) => {
     socket.on("getOnlineUsers", (users) => setOnlineUsers(users));
 
     socket.on("newMessage", (message) => {
+      // Notify active chat listener
       const cb = messageListeners.current.get(String(message.senderId));
       if (cb) cb(message);
+
+      // Also notify global listener (always call it, let the subscriber decide to filter)
+      const globalCb = messageListeners.current.get("__global__");
+      if (globalCb) globalCb(message);
     });
 
     return () => {
@@ -40,13 +45,14 @@ export const SocketProvider = ({ children }) => {
     };
   }, [authUser]);
 
-  const subscribeToMessages = (senderId, callback) => {
+  // Wrap in useCallback-like stable refs so consumers don't re-render on every call
+  const subscribeToMessages = useRef((senderId, callback) => {
     messageListeners.current.set(String(senderId), callback);
-  };
+  }).current;
 
-  const unsubscribeFromMessages = (senderId) => {
+  const unsubscribeFromMessages = useRef((senderId) => {
     messageListeners.current.delete(String(senderId));
-  };
+  }).current;
 
   const isOnline = (userId) => onlineUsers.includes(String(userId));
 
