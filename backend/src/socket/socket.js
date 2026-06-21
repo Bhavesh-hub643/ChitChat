@@ -1,6 +1,6 @@
 import { Server } from "socket.io";
 import http from "http";
-import app from "../app.js";   // ← ../app.js not ./app.js
+import app from "../app.js";   
 
 export const httpServer = http.createServer(app);
 

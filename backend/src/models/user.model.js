@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
   username:    { type: String, required: true, unique: true },
   password:    { type: String, required: true },
   profilePic:  { type: String, default: "" },
-  refreshToken:{ type: String },          // ✅ added — needed for logout & token rotation
+  refreshToken:{ type: String },          
 }, { timestamps: true })
 
 // ── instance methods ──────────────────────────────────────────────────────────

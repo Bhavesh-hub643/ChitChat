@@ -90,7 +90,7 @@ const login = asyncHandler(async (req, res) => {
   const user = await User.findOne({ username: username.toLowerCase() });
   if (!user) throw new ApiError(404, null, "User not found");
 
-  // ✅ uses the model instance method now
+  // uses the model instance method now
   const isPasswordValid = await user.isPasswordCorrect(password);
   if (!isPasswordValid) throw new ApiError(401, null, "Invalid credentials");
 
